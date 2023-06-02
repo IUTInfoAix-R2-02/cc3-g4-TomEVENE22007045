@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,11 +54,19 @@ public class ToileController implements Initializable {
     //Variables
     private double value;
 
-    private ArrayList<Circle> dotsList;
+    private ArrayList<TextField> textFields = new ArrayList<>();
+
+    private ArrayList<Circle> dotsList = new ArrayList<>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        textFields.add(comp1);
+        textFields.add(comp2);
+        textFields.add(comp3);
+        textFields.add(comp4);
+        textFields.add(comp5);
+        textFields.add(comp6);
     }
 
     int getXRadarChart(double value, int axe ){
@@ -73,33 +82,17 @@ public class ToileController implements Initializable {
     @FXML
     public void handlerTextFiled(ActionEvent event){
         Node node = (Node) event.getSource() ;
-        String id = node.getId();
-        int axeId = Integer.parseInt(id.substring(4));
-        switch (id){
-            case "comp1":
-                value = Double.parseDouble(comp1.getText());
-                break;
-            case "comp2":
-                value = Double.parseDouble(comp2.getText());
-                break;
-            case "comp3":
-                value = Double.parseDouble(comp3.getText());
-                break;
-            case "comp4":
-                value = Double.parseDouble(comp4.getText());
-                break;
-            case "comp5":
-                value = Double.parseDouble(comp5.getText());
-                break;
-            case "comp6":
-                value = Double.parseDouble(comp6.getText());
-                break;
-            default:
-                break;
+        int axeId = Integer.parseInt(node.getId().substring(4));
+        try {
+            Double value = Double.parseDouble(textFields.get(axeId - 1).getText());
+            System.out.println(value);
+        }catch (Exception e){
+            System.out.println(e);
         }
 
+
         Circle dots = new Circle(getXRadarChart(value, axeId), getYRadarChart(value, axeId), 5);
-        dots.setId("dots."+id);
+        dots.setId("dots."+axeId);
         dotsList.add(dots);
         paneCircle.getChildren().add(dots);
     }
