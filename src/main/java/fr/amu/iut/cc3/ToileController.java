@@ -102,10 +102,12 @@ public class ToileController implements Initializable {
             }
 
             if(getCircleFromId("dots." + axeId) != null){
-                System.out.println("ici");
                 Circle dots = getCircleFromId("dots." + axeId);
                 dots.setCenterX(getXRadarChart(value, axeId));
                 dots.setCenterY(getYRadarChart(value, axeId));
+                if(lineList.size() > 0){
+                    handlerTraceButton();
+                }
                 return;
             }
 
@@ -113,6 +115,9 @@ public class ToileController implements Initializable {
             dots.setId("dots."+axeId);
             dotsList.add(dots);
             paneCircle.getChildren().add(dots);
+            if(lineList.size() > 0){
+                handlerTraceButton();
+            }
 
         }catch (Exception e){
             setErrorText("Uniquement sout le format (20.0)", true);
@@ -133,6 +138,10 @@ public class ToileController implements Initializable {
         for(Circle c : dotsList){
             paneCircle.getChildren().remove(c);
         }
+
+        for(Line l : lineList){
+            paneCircle.getChildren().remove(l);
+        }
     }
 
     public Circle getCircleFromId(String id){
@@ -145,6 +154,10 @@ public class ToileController implements Initializable {
     }
     
     public void handlerTraceButton(){
+        for(Line l : lineList){
+            paneCircle.getChildren().remove(l);
+        }
+
         for (int i = 0; i < dotsList.size(); i++) {
             Line line;
             if(i == dotsList.size() - 1){
