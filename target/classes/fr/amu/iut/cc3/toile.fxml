@@ -65,7 +65,7 @@
         </VBox>
 
         <HBox alignment="BOTTOM_RIGHT" maxWidth="175" spacing="15">
-            <Button text="Tracer" prefWidth="50"/>
+            <Button text="Tracer" prefWidth="50" onAction="#handlerTraceButton"/>
             <Button text="Vider" prefWidth="50" onAction="#handlerClearButton"/>
         </HBox>
     </VBox>

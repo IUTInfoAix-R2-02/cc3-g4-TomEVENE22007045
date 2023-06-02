@@ -65,6 +65,7 @@ public class ToileController implements Initializable {
     private ArrayList<TextField> textFields = new ArrayList<>();
 
     private ArrayList<Circle> dotsList = new ArrayList<>();
+    private ArrayList<Line> lineList = new ArrayList<>();
 
 
     @Override
@@ -141,6 +142,20 @@ public class ToileController implements Initializable {
             }
         }
         return null;
+    }
+    
+    public void handlerTraceButton(){
+        for (int i = 0; i < dotsList.size(); i++) {
+            Line line;
+            if(i == dotsList.size() - 1){
+                line = new Line(dotsList.get(i).getCenterX(), dotsList.get(i).getCenterY(),dotsList.get(0).getCenterX(), dotsList.get(0).getCenterY());
+            }else{
+                line = new Line(dotsList.get(i).getCenterX(), dotsList.get(i).getCenterY(),dotsList.get(i + 1).getCenterX(), dotsList.get(i + 1).getCenterY());
+            }
+            line.setStyle("-fx-stroke: black;");
+            lineList.add(line);
+            paneCircle.getChildren().add(line);
+        }
     }
 
 }
