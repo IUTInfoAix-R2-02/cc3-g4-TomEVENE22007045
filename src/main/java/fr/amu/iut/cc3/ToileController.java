@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ToileController implements Initializable {
@@ -99,6 +100,14 @@ public class ToileController implements Initializable {
                 setErrorText("", false);
             }
 
+            if(getCircleFromId("dots." + axeId) != null){
+                System.out.println("ici");
+                Circle dots = getCircleFromId("dots." + axeId);
+                dots.setCenterX(getXRadarChart(value, axeId));
+                dots.setCenterY(getYRadarChart(value, axeId));
+                return;
+            }
+
             Circle dots = new Circle(getXRadarChart(value, axeId), getYRadarChart(value, axeId), 5);
             dots.setId("dots."+axeId);
             dotsList.add(dots);
@@ -108,16 +117,30 @@ public class ToileController implements Initializable {
             setErrorText("Uniquement sout le format (20.0)", true);
             return;
         }
-
-
-
     }
 
     private void setErrorText(String textError,Boolean visible){
         errorTitleLabel.setVisible(visible);
         errorLabel.setVisible(visible);
         errorLabel.setText(textError);
+    }
 
+    public void handlerClearButton(){
+        for (TextField t : textFields){
+            t.setText("");
+        }
+        for(Circle c : dotsList){
+            paneCircle.getChildren().remove(c);
+        }
+    }
+
+    public Circle getCircleFromId(String id){
+        for(Circle c : dotsList){
+            if(Objects.equals(c.getId(), id)){
+                return c;
+            }
+        }
+        return null;
     }
 
 }
