@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.net.URL;
@@ -31,6 +32,29 @@ public class ToileController implements Initializable {
     private static int angleDepart = 90;
     private static int noteMaximale = 20;
 
+    //Imports text field
+    @FXML
+    private TextField comp1;
+    @FXML
+    private TextField comp2;
+    @FXML
+    private TextField comp3;
+    @FXML
+    private TextField comp4;
+    @FXML
+    private TextField comp5;
+    @FXML
+    private TextField comp6;
+
+    //import Pane of Circle
+    @FXML
+    private Pane paneCircle;
+
+    //Variables
+    private double value;
+
+    private ArrayList<Circle> dotsList;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,6 +68,40 @@ public class ToileController implements Initializable {
     int getYRadarChart(double value, int axe ){
         return (int) (rayonCercleExterieur - Math.sin(Math.toRadians(angleDepart - (axe-1)  * angleEnDegre)) * rayonCercleExterieur
                 *  (value / noteMaximale));
+    }
+
+    @FXML
+    public void handlerTextFiled(ActionEvent event){
+        Node node = (Node) event.getSource() ;
+        String id = node.getId();
+        int axeId = Integer.parseInt(id.substring(4));
+        switch (id){
+            case "comp1":
+                value = Double.parseDouble(comp1.getText());
+                break;
+            case "comp2":
+                value = Double.parseDouble(comp2.getText());
+                break;
+            case "comp3":
+                value = Double.parseDouble(comp3.getText());
+                break;
+            case "comp4":
+                value = Double.parseDouble(comp4.getText());
+                break;
+            case "comp5":
+                value = Double.parseDouble(comp5.getText());
+                break;
+            case "comp6":
+                value = Double.parseDouble(comp6.getText());
+                break;
+            default:
+                break;
+        }
+
+        Circle dots = new Circle(getXRadarChart(value, axeId), getYRadarChart(value, axeId), 5);
+        dots.setId("dots."+id);
+        dotsList.add(dots);
+        paneCircle.getChildren().add(dots);
     }
 
 }
