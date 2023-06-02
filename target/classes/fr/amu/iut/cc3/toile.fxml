@@ -38,7 +38,7 @@
         </Pane>
     </VBox>
 
-    <VBox  alignment="CENTER">
+    <VBox  alignment="CENTER" spacing="20">
         <GridPane hgap="10" vgap="15">
             <Label text="Compétence 1 - Réaliser" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
             <TextField prefWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="comp1" onAction="#handlerTextFiled"/>
@@ -59,7 +59,12 @@
             <TextField prefWidth="50" GridPane.columnIndex="1" GridPane.rowIndex="5" fx:id="comp6" onAction="#handlerTextFiled"/>
         </GridPane>
 
-        <HBox alignment="BOTTOM_RIGHT" prefHeight="100" maxWidth="175" spacing="15">
+        <VBox>
+            <Label text="Erreur de saisie:" visible="false" fx:id="errorTitleLabel" style="-fx-text-fill: red;"/>
+            <Label text="" visible="false" fx:id="errorLabel" style="-fx-text-fill: red;"/>
+        </VBox>
+
+        <HBox alignment="BOTTOM_RIGHT" maxWidth="175" spacing="15">
             <Button text="Tracer" prefWidth="50"/>
             <Button text="Vider" prefWidth="50"/>
         </HBox>

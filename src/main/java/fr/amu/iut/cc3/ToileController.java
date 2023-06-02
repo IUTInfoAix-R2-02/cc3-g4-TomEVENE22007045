@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -51,6 +52,12 @@ public class ToileController implements Initializable {
     @FXML
     private Pane paneCircle;
 
+    //import of Labels
+    @FXML
+    private Label errorTitleLabel;
+    @FXML
+    private Label errorLabel;
+
     //Variables
     private double value;
 
@@ -85,16 +92,32 @@ public class ToileController implements Initializable {
         int axeId = Integer.parseInt(node.getId().substring(4));
         try {
             Double value = Double.parseDouble(textFields.get(axeId - 1).getText());
-            System.out.println(value);
+            if(value < 0.0 || value > 20.0){
+                setErrorText("Les valeurs doivent être entre 0 et 20", true);
+                return;
+            }else{
+                setErrorText("", false);
+            }
+
+            Circle dots = new Circle(getXRadarChart(value, axeId), getYRadarChart(value, axeId), 5);
+            dots.setId("dots."+axeId);
+            dotsList.add(dots);
+            paneCircle.getChildren().add(dots);
+
         }catch (Exception e){
-            System.out.println(e);
+            setErrorText("Uniquement sout le format (20.0)", true);
+            return;
         }
 
 
-        Circle dots = new Circle(getXRadarChart(value, axeId), getYRadarChart(value, axeId), 5);
-        dots.setId("dots."+axeId);
-        dotsList.add(dots);
-        paneCircle.getChildren().add(dots);
+
+    }
+
+    private void setErrorText(String textError,Boolean visible){
+        errorTitleLabel.setVisible(visible);
+        errorLabel.setVisible(visible);
+        errorLabel.setText(textError);
+
     }
 
 }
